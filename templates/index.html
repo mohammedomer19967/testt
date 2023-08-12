@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+    <div>
+        <textarea id="userQuery" placeholder="Ask me anything..."></textarea>
+        <button onclick="askBot()">Generate response</button>
+    </div>
+    <div id="botResponse"></div>
+
+    <script>
+        function askBot() {
+            const query = document.getElementById('userQuery').value;
+            fetch('/ask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        query: query
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('botResponse').textContent = data;
+                });
+        }
+    </script>
+</body>
+
+</html>
